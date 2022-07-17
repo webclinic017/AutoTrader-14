@@ -1,7 +1,9 @@
 from sma_agent import SMAAgent
+from macd_agent import MacDAgent
 from validation_utils import run_backtest
 
-agent = SMAAgent()
+#agent = SMAAgent()
+agent = MacDAgent()
 
 backtest_settings = {
     "history": 50,                      # History available to the agent
