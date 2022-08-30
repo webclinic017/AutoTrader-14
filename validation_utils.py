@@ -74,6 +74,7 @@ def _define_strategy_wrapper(agent, settings, data):
             self.data_open = self.datas[0].open
             self.data_high = self.datas[0].high
             self.data_low = self.datas[0].low
+            self.data_volume = self.datas[0].volume
 
             # Order variable will contain ongoing order details/status
             self.order = None
@@ -124,12 +125,14 @@ def _define_strategy_wrapper(agent, settings, data):
                 open_data = list(self.data_open.get(size=history))
                 high_data = list(self.data_high.get(size=history))
                 low_data = list(self.data_low.get(size=history))
+                volume_data = list(self.data_volume.get(size=history))
                 idx = data.index.values[len(self) - history:len(self)]
                 df = pd.DataFrame(
                     {"Open": open_data,
                      "Close": close_data,
-                     "High": close_data,
-                     "Low": low_data}, index=idx)
+                     "High": high_data,
+                     "Low": low_data,
+                     "Volume": volume_data}, index=idx)
 
                 action = agent.apply_policy(df)
 
