@@ -15,22 +15,22 @@ Todo:
 from trading_agent import TradingAgent
 
 
-class  MacDAgent(TradingAgent):
+class MacDAgent(TradingAgent):
     """Simple Moving Average Agent Class.
 
     Defines generation infrastructures and provides related information.
     """
 
     def __init__(self):
-        self.position_open = False 
+        self.position_open = False
         self.price_bought = 0
 
     def __repr__(self):
         return 'SMA Agent'
 
-    def apply_policy(self, price):
+    def apply_policy(self, df):
 
-        price = price.values
+        price = df['Close'].values
 
         action = 0
 
@@ -48,12 +48,11 @@ class  MacDAgent(TradingAgent):
 
         # Selling
         if self.position_open == True:
-            if price[-1] >= 1.001*self.price_bought or price[-1] <= 0.9995*self.price_bought:
+            if price[-1] >= 1.001 * self.price_bought or price[-1] <= 0.9995 * self.price_bought:
                 action = -1
                 self.position_open = False
 
         return action
-
 
     """
     #RSI
@@ -79,7 +78,6 @@ class  MacDAgent(TradingAgent):
         average_gain_14 = price[-15:-1].mean
     """
 
-
     @staticmethod
     def get_default_settings() -> dict:
         """Returns the class' default settings dictionary.
@@ -94,4 +92,3 @@ class  MacDAgent(TradingAgent):
         }
 
         return def_config
-
